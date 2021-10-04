@@ -1,0 +1,170 @@
+ <nav style="justify-content: center; font-size: large;" class="navbar navbar-expand-sm bg-primary navbar-dark">
+    Company Employee Details
+  </nav>
+ <!-- <div class="container">
+    <div class="adduser">
+      <form #form="ngForm" (ngSubmit)="addUser(form)">
+        <div class="row">
+          <div class="col-md-6">
+            <input type="hidden" name="id" [(ngModel)]="user.id">
+            <div class="form-group">
+              <label>First Name</label>
+              <input type="text" name="firstName" [(ngModel)]="user.firstName" class="form-control">
+            </div>
+            <div class="form-group">
+              <label>Email</label>
+              <input type="text" name="email" [(ngModel)]="user.email" class="form-control">
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>Last Name</label>
+              <input type="text" name="lastName" [(ngModel)]="user.lastName" class="form-control">
+            </div>
+            
+            <div class="form-group">
+              <label>Role</label>
+              <input type="text" name="role" [(ngModel)]="user.role" class="form-control">
+            </div>
+          </div>
+          </div>
+          <div class="form-group">
+            <button class="btn btn-success"  type="submit" style="width: 300px; height: 40px; margin-right: 2px;" >Add</button>
+            <button class="btn btn-info" (click)="resetAll()"  type="button" style="width: 300px; height: 40px; margin-right: 2px;" >Reset</button>
+          </div>
+      </form>
+    </div>
+    <hr>
+    <div class="row" style="margin-bottom: 1rem;">
+      <div class="col-md-6">
+        <label style="color: crimson;"><u>List Of Users</u></label>
+      </div>
+      <div class="col-md-6">
+        <input type="text" [(ngModel)]="terms" placeholder="Serach any fields"/>
+      </div>
+    </div>
+
+    
+      <table class="table table-striped table-bordered">
+          <thead>
+              <tr>
+                <th>Id</th>
+                  <th><a (click)="sortType('firstName')">Name</a>
+                    <span *ngIf="reverse">
+                      <i class="fa fa-arrow-up" aria-hidden="true"></i>
+                  </span>
+                  <span *ngIf="!reverse">
+                    <i class="fa fa-arrow-down" aria-hidden="true"></i>
+                  </span> 
+                  </th>
+                  <th ><a (click)="sortType('email')">Email</a>
+                    <span *ngIf="reverse">
+                      <i class="fa fa-arrow-up" aria-hidden="true"></i>
+                  </span>
+                  <span *ngIf="!reverse">
+                    <i class="fa fa-arrow-down" aria-hidden="true"></i>
+                  </span> 
+                  </th>
+                  <th ><a (click)="sortType('role')">Role</a>
+                    <span *ngIf="reverse">
+                      <i class="fa fa-arrow-up" aria-hidden="true"></i>
+                  </span>
+                  <span *ngIf="!reverse">
+                    <i class="fa fa-arrow-down" aria-hidden="true"></i>
+                  </span> 
+                  </th>
+                  <th style="text-align: center;">Actions</th>
+              </tr>
+          </thead>
+          <tbody>
+              <tr *ngFor="let user of Users | sort  | search:terms; let i= index">
+                <td>{{i+1}}</td>
+                  <td>{{user.firstName}} {{user.lastName}}</td>
+                  <td>{{user.email}}</td>
+                  <td>{{user.role}}</td>
+                  <td style="text-align: center;">
+                    <button style="margin-right: 4px;" class="btn btn-primary" (click)="updateUser(user.id)" >Edit</button>
+                    <button style="margin-right: 4px;" class="btn btn-danger" (click)="deleteUser(user.id)">Delete</button>
+                    <button class="btn btn-primary" (click)="getDetails(user)" >View Details</button>
+                  </td>
+              </tr>
+          </tbody>
+      </table>
+  </div>
+   -->
+   <div class="example-container mat-elevation-z8">
+    <button mat-raised-button color="warn" (click)="removeSelectedRows()">
+      Remove Selected Rows
+    </button>
+   <mat-form-field appearance="standard" style="float: right;">
+    <mat-label>Filter</mat-label>
+    <input matInput (keyup)="applyFilter($event)" placeholder="Search with any keyword" #input>
+  </mat-form-field>
+   <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
+  <!-- Checkbox Column -->
+  <ng-container matColumnDef="select">
+    <th mat-header-cell *matHeaderCellDef>
+      <mat-checkbox (change)="$event ? masterToggle() : null"
+                    [checked]="selection.hasValue() && isAllSelected()"
+                    [indeterminate]="selection.hasValue() && !isAllSelected()"
+                    [aria-label]="checkboxLabel()">
+      </mat-checkbox>
+    </th>
+    <td mat-cell *matCellDef="let row">
+      <mat-checkbox (click)="$event.stopPropagation()"
+                    (change)="$event ? selection.toggle(row) : null"
+                    [checked]="selection.isSelected(row)"
+                    [aria-label]="checkboxLabel(row)">
+      </mat-checkbox>
+    </td>
+  </ng-container>
+
+    <!-- Id Column -->
+    <ng-container matColumnDef="id">
+      <th mat-header-cell *matHeaderCellDef> Id </th>
+      <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+    </ng-container>
+  
+    <!--First Name Column -->
+    <ng-container matColumnDef="firstName">
+      <th mat-header-cell *matHeaderCellDef> First Name </th>
+      <td mat-cell *matCellDef="let element"> {{element.firstName}} </td>
+    </ng-container>
+  
+    <!-- Last Name Column -->
+    <ng-container matColumnDef="lastName">
+      <th mat-header-cell *matHeaderCellDef> Last Name </th>
+      <td mat-cell *matCellDef="let element"> {{element.lastName}} </td>
+    </ng-container>
+  
+    <!-- Email Column -->
+    <ng-container matColumnDef="email">
+      <th mat-header-cell *matHeaderCellDef> Email </th>
+      <td mat-cell *matCellDef="let element"> {{element.email}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="role">
+      <th mat-header-cell *matHeaderCellDef> Role </th>
+      <td mat-cell *matCellDef="let element"> {{element.role}} </td>
+    </ng-container>
+    <ng-container matColumnDef="action">
+      <th mat-header-cell *matHeaderCellDef> Actions </th>
+      <td mat-cell *matCellDef="let element"> 
+        <button mat-raised-button color="accent" ><mat-icon>edit</mat-icon></button>
+      </td>
+    </ng-container>
+  
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+  <button mat-raised-button color="primary" (click)="resetAll()">
+    Reset All
+  </button>
+  <mat-paginator #paginator
+                  [pageIndex]="0"
+                  [pageSize]="5"
+                  [pageSizeOptions]="[5, 10, 25, 100]">
+    </mat-paginator>
+   </div>
+  
+  

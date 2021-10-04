@@ -1,0 +1,12 @@
+/* thead>tr>th {
+    cursor: pointer;
+}
+
+.by-email, .by-name {
+    text-decoration: underline;
+    padding-left: 10px;
+    cursor: pointer;
+  } */
+  table {
+    width: 100%;
+  }
